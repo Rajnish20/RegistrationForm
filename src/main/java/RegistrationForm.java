@@ -24,6 +24,13 @@ public class RegistrationForm {
         return matcher.matches();
     }
 
+    boolean validateEmailId(String emailId) {
+        String regex = "^[A-Za-z0-9-\\+]+(\\.[A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(emailId);
+        return matcher.matches();
+    }
+
 
     public static void main(String[] args) {
         System.out.println("User Registration");
@@ -31,7 +38,7 @@ public class RegistrationForm {
         Scanner scanner = new Scanner(System.in);
 
         RegistrationForm registrationForm = new RegistrationForm();
-        
+
         System.out.println("Enter First Name");
         String firstName = scanner.nextLine();
         System.out.println(registrationForm.validateFirstName(firstName));
@@ -44,6 +51,8 @@ public class RegistrationForm {
         String mobileNo = scanner.nextLine();
         System.out.println(registrationForm.validateMobileNo(mobileNo));
 
-
+        System.out.println("Enter email Id");
+        String emailId = scanner.nextLine();
+        System.out.println(registrationForm.validateEmailId(emailId));
     }
 }
