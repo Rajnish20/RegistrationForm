@@ -1,86 +1,59 @@
+
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class RegistrationForm {
-    boolean validateFirstName(String firstName) {
-        String regex = "^[A-Z][a-z]{3,}";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(firstName);
-        return matcher.matches();
-    }
 
-    boolean validateLastName(String lastName) {
-        String regex = "^[A-Z][a-z]{3,}";
+    IValidateFunction validateDetails = (userData, regex) -> {
         Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(lastName);
+        Matcher matcher = pattern.matcher(userData);
         return matcher.matches();
-    }
-
-    boolean validateMobileNo(String mobileNo) {
-        String regex = "\\d{2} \\d{10}";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(mobileNo);
-        return matcher.matches();
-    }
-
-    boolean validateEmailId(String emailId) {
-        String regex = "^[A-Za-z0-9-\\+]+(\\.[A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(emailId);
-        return matcher.matches();
-    }
-
-    boolean validatePassword(String password)
-    {
-        String regex =  "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&*-+=()]).{8,}$";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(password);
-        return matcher.matches();
-    }
+    };
 
     public static void main(String[] args) {
-        System.out.println("User Registration");
-        System.out.println("Enter Details");
         Scanner scanner = new Scanner(System.in);
-
         RegistrationForm registrationForm = new RegistrationForm();
         String firstName;
         String lastName;
         String mobileNo;
         String emailId;
         String password;
+        String regex;
         do {
             System.out.println("Enter First Name");
             firstName = scanner.nextLine();
-            System.out.println(registrationForm.validateFirstName(firstName));
-        }while(!registrationForm.validateFirstName(firstName));
+            regex = "^[A-Z][a-z]{3,}";
+            System.out.println((registrationForm.validateDetails.validate(firstName, regex)));
+        } while (!registrationForm.validateDetails.validate(firstName, regex));
 
         do {
             System.out.println("Enter Last Name");
             lastName = scanner.nextLine();
-            System.out.println(registrationForm.validateLastName(lastName));
-        }while(!registrationForm.validateLastName(lastName));
+            regex = "^[A-Z][a-z]{3,}";
+            System.out.println((registrationForm.validateDetails.validate(lastName, regex)));
+        } while (!registrationForm.validateDetails.validate(lastName, regex));
 
         do {
-            System.out.println("Enter Mobile No :");
+            System.out.println("Enter Mobile No");
             mobileNo = scanner.nextLine();
-            System.out.println(registrationForm.validateMobileNo(mobileNo));
-        }while(!registrationForm.validateMobileNo(mobileNo));
+            regex = "\\d{2} \\d{10}";
+            System.out.println((registrationForm.validateDetails.validate(mobileNo, regex)));
+        } while (!registrationForm.validateDetails.validate(mobileNo, regex));
 
         do {
-            System.out.println("Enter email Id");
+            System.out.println("Enter Email Id");
             emailId = scanner.nextLine();
-            System.out.println(registrationForm.validateEmailId(emailId));
-        }while (!registrationForm.validateEmailId(emailId));
+            regex = "^[A-Za-z0-9-\\+]+(\\.[A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+            System.out.println((registrationForm.validateDetails.validate(emailId, regex)));
+        } while (!registrationForm.validateDetails.validate(emailId, regex));
 
         do {
             System.out.println("Enter Password");
             password = scanner.nextLine();
-            System.out.println(registrationForm.validatePassword(password));
-        }while (!registrationForm.validatePassword(password));
-        System.out.println("User has been registered");
-
-
+            regex = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&*-+=()]).{8,}$";
+            System.out.println((registrationForm.validateDetails.validate(password, regex)));
+        } while (!registrationForm.validateDetails.validate(password, regex));
     }
+
 }
